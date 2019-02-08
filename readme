@@ -1,0 +1,24 @@
+// Crear el projecte
+$ mkdir <carpeta projecte>
+$ cd <carpeta projecte>
+
+// Crear l'estructura de projecte express i instal·lar les llibreries de test
+$ express -e
+$ npm install
+$ npm install mocha --save-dev
+$ mkdir test
+
+// Editar package.json i posar l'entorn de test
+"test": "mocha --reporter list"
+
+// Instal·lar les llibreries three.js
+npm install three --save-dev
+
+// Verificar que funciona la pàgina per defecte
+$ npm start
+$ google-chrome https://localhost:3000
+
+// Crear l'esquelet bàsic de l'aplicació three.js
+$ mkdir ./public/textures               // Carpeta a on hi hauria les imatges per les textures
+$ touch ./public/javascripts/main.js    // script principal de three.js
+
