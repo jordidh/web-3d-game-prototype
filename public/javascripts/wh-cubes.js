@@ -288,7 +288,7 @@ function createDock(dockName, initialX, initialY, initialZ, sizeX, sizeY, sizeZ)
 
     // Dock
     var geometry  = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
-    var boxMaterial = new THREE.MeshBasicMaterial({color: 0x333333, wireframe: true});
+    var boxMaterial = new THREE.MeshBasicMaterial({color: 0x333333, wireframe: true, wireframeLinewidth: 2});
     var cube = new THREE.Mesh(geometry, boxMaterial);
 
     // Set the position, by default is (0, 0, 0)
@@ -327,12 +327,12 @@ function createShelf(shelfPrefix, numRows, numColumns, initialX, initialY, initi
     var textureLoader = new THREE.TextureLoader();
     var texture = textureLoader.load( 'textures/wood-cube-01.jpg' );
 
-    for ( var row = 0; row < numRows; row++ ) {
-        for ( var col = 0; col < numColumns; col++ ) {
-            var geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
-            var boxMaterial = new THREE.MeshBasicMaterial( { map: texture, opacity: 1, transparent: true } );
+    for ( let row = 0; row < numRows; row++ ) {
+        for ( let col = 0; col < numColumns; col++ ) {
+            let geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
+            let boxMaterial = new THREE.MeshBasicMaterial( { map: texture, opacity: 1, transparent: true } );
             //var material = new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
-            var cube = new THREE.Mesh(geometry, boxMaterial);
+            let cube = new THREE.Mesh(geometry, boxMaterial);
 
             // Set the position, by default is (0, 0, 0)
             if (orientation === 'z') {
@@ -357,16 +357,16 @@ function createShelf(shelfPrefix, numRows, numColumns, initialX, initialY, initi
     // Create the shelf structure
 
     // Barres travesseres
-    for ( var row = 1; row < numRows; row++ ) {
-        var geometry;
+    for ( let row = 1; row < numRows; row++ ) {
+        let geometry;
         if (orientation === 'z') {
             geometry = new THREE.BoxGeometry((boxSize + boxMargin), shelfSize, (boxSize + boxMargin) * numColumns,  1, 1, 1);
         }
         else {
             geometry = new THREE.BoxGeometry((boxSize + boxMargin) * numColumns, shelfSize, (boxSize + boxMargin), 1, 1, 1);
         }
-        var boxMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
-        var cube = new THREE.Mesh(geometry, boxMaterial);
+        let boxMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true, wireframeLinewidth: 2});
+        let cube = new THREE.Mesh(geometry, boxMaterial);
 
         // Set the position, by default is (0, 0, 0)
         if (orientation === 'z') {
@@ -386,7 +386,7 @@ function createShelf(shelfPrefix, numRows, numColumns, initialX, initialY, initi
     }
 
     // Puntals verticals
-    for ( var col = 0; col < numColumns + 1; col++ ) {
+    for ( let col = 0; col < numColumns + 1; col++ ) {
         var geometry;
         if (orientation === 'z') {
             geometry = new THREE.BoxGeometry((boxSize + boxMargin), (boxSize + boxMargin) * numRows, shelfSize, 1, 1, 1);
@@ -395,7 +395,7 @@ function createShelf(shelfPrefix, numRows, numColumns, initialX, initialY, initi
             geometry = new THREE.BoxGeometry(shelfSize, (boxSize + boxMargin) * numRows, (boxSize + boxMargin), 1, 1, 1);
         }
         //var boxMaterial = new THREE.MeshBasicMaterial( { map: texture, opacity: 1, transparent: true } );
-        var boxMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true, wireframeLinewidth: 10});
+        var boxMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true, wireframeLinewidth: 2});
         var cube = new THREE.Mesh(geometry, boxMaterial);
 
         // Set the position, by default is (0, 0, 0)
@@ -410,7 +410,7 @@ function createShelf(shelfPrefix, numRows, numColumns, initialX, initialY, initi
                 ((boxSize + boxMargin) * numRows) / 2 + initialY,
                 ( boxSize / 2 ) + initialZ);  // Center of the box
         }
-        cube.name = 'PUNTAL-' + shelfPrefix + '-X' + row.toString();
+        cube.name = 'PUNTAL-' + shelfPrefix + '-X' + col.toString();
         scene.add(cube);
     }
 
