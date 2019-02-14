@@ -22,3 +22,9 @@ $ google-chrome https://localhost:3000
 $ mkdir ./public/textures               // Carpeta a on hi hauria les imatges per les textures
 $ touch ./public/javascripts/main.js    // script principal de three.js
 
+// Per fer un paquet amb l'aplicació amb l'eina pkg
+// https://github.com/zeit/pkg
+// Instalar
+$ sudo npm install -g pkg
+// Crear el fitxer "warehouse" per linux
+$ pkg bin/www --targets latest-linux-x64 --output ./warehouse
