@@ -26,5 +26,10 @@ $ touch ./public/javascripts/main.js    // script principal de three.js
 // https://github.com/zeit/pkg
 // Instalar
 $ sudo npm install -g pkg
+// Modificar el package json afengint:
+"pkg": {
+  "assets": ["views/**/*", "public/**/*"]
+},
+"bin": "./bin/www"
 // Crear el fitxer "warehouse" per linux
-$ pkg bin/www --targets latest-linux-x64 --output ./warehouse
+$ pkg package.json --targets latest-linux-x64 --output ./warehouse
