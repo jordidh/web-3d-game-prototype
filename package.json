@@ -20,7 +20,10 @@
     "three": "^0.100.0"
   },
   "pkg": {
-    "assets": ["views/**/*", "public/**/*"]
+    "assets": [
+      "views/**/*",
+      "public/**/*"
+    ]
   },
   "bin": "./bin/www"
 }

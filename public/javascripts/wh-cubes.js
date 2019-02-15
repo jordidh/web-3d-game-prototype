@@ -7,14 +7,18 @@ const boxOpacity = 0.15;
 /** Variables **/
 var container;
 var camera, controls, scene, renderer;
-var pickingData = [], pickingTexture, pickingScene;
-var highlightBox;
-var mouse = new THREE.Vector2();
+//var pickingData = [], pickingTexture, pickingScene;
+//var highlightBox;
+var mouse = new THREE.Vector2(), INTERSECTED;
 var offset = new THREE.Vector3( 10, 10, 10 );
 var radius = 500;
 var angle = 0;
 var cameraStartPosition = new THREE.Vector3( 3000, 1500, 3000 );
 var cameraModification = new THREE.Vector3( 0, 0, 0 );
+
+var raycaster;
+var highlightMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+var materialAux;
 
 /** Main program **/
 init();
@@ -54,17 +58,15 @@ function init() {
     //scene.fog = new THREE.Fog( 0x000000, 250, 1400 );
 
     // Add lights
-    var pointLight = new THREE.PointLight( 0xffffff, 1.5 );
-    pointLight.position.set( 0, 4000, 0 );
-    pointLight.color.setHSL( Math.random(), 1, 0.5 );
-    scene.add( pointLight );
+    //var pointLight = new THREE.PointLight( 0xffffff, 1.5 );
+    //pointLight.position.set( 0, 4000, 0 );
+    //pointLight.color.setHSL( Math.random(), 1, 0.5 );
+    //scene.add( pointLight );
 
-    /*
-    scene.add( new THREE.AmbientLight( 0x555555 ) );
+    scene.add( new THREE.AmbientLight( 0xffffff ) );
     var light = new THREE.SpotLight( 0xffffff, 1.5 );
-    light.position.set( 0, 500, 2000 );
+    light.position.set( 0, 4000, 0 );
     scene.add( light );
-    */
 
     // Create a plane with axis
     var geo1 = new THREE.PlaneBufferGeometry(8000, 8000, 8, 8);
@@ -98,6 +100,9 @@ function init() {
     createDock('DOCK_OUT', -2800, 1, -300, 50, 400, 300);
     createDock('DOCK_IN', -2800, 1, 100, 50, 400, 300);
 
+    // Initialize raycaster to find intersections
+    raycaster = new THREE.Raycaster();
+
     // Render
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -105,11 +110,29 @@ function init() {
     container.appendChild( renderer.domElement );
     document.addEventListener( 'keypress', onKeyPress, false );
     renderer.domElement.addEventListener( 'mousemove', onMouseMove );
+    renderer.domElement.addEventListener( 'resize', onWindowResize, false );
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
 function onMouseMove( e ) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    //mouse.x = e.clientX;
+    //mouse.y = e.clientY;
+
+    event.preventDefault();
+    // calculate mouse position in normalized device coordinates (-1 to +1) for both components
+    //mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    //mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    mouse.x = (( event.clientX / window.innerWidth ) * 1.9) - 1;
+    mouse.y = - (( event.clientY / window.innerHeight ) * 1.9) + 1;
+
+
+    console.log('e.client = ' + e.clientX + ", " + e.clientY);
+    console.log('Mouse = ' + mouse.x + ", " + mouse.y);
 }
 
 // Key pressed to move camera
@@ -236,6 +259,42 @@ function render() {
 
     // Move through mouse
     pick();
+
+
+    // Find intersections
+    //camera.updateMatrixWorld();
+    raycaster.setFromCamera( mouse, camera );
+    var intersects = raycaster.intersectObjects( scene.children );
+    if ( intersects.length > 0 ) {
+
+        //console.log('Obejctes interseccionats: ' + intersects.length);
+
+        if ( INTERSECTED != intersects[ 0 ].object ) {
+
+
+
+            if ( INTERSECTED ) {
+                //INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+                INTERSECTED.material = materialAux;
+            }
+            if (intersects[ 0 ].object.name.startsWith('E')) {
+                INTERSECTED = intersects[0].object;
+
+                //INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+                //INTERSECTED.material.emissive.setHex( 0xff0000 );
+                materialAux = INTERSECTED.material;
+                INTERSECTED.material = highlightMaterial;
+            }
+        }
+    } else {
+        if ( INTERSECTED ) {
+            //INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+            INTERSECTED.material = materialAux;
+        }
+        INTERSECTED = null;
+    }
+
+
     renderer.render( scene, camera );
 }
 
