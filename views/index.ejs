@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Joc web 3D</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="./javascripts/three.min.js"></script>
-    <script src="./javascripts/TrackballControls.js"></script>
-    <script src="./javascripts/BufferGeometryUtils.js"></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <script src="./javascripts/wh-cubes.js"></script>
-    <div id="info">Magatzem de prova</div>
+    <h1>Benvingut al joc</h1>
+    <form action="/name", method="post">
+      Com et dius?
+      <input type="text" name="name" value="Mickey">
+      <input type="submit" value="Continua">
+    </form>
   </body>
 </html>

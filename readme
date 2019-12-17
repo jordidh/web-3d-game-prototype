@@ -33,3 +33,8 @@ $ sudo npm install -g pkg
 "bin": "./bin/www"
 // Crear el fitxer "warehouse" per linux
 $ pkg package.json --targets latest-linux-x64 --output ./warehouse
+
+
+Bibliografia:
+https://threejs.org/
+https://gamedevelopment.tutsplus.com/tutorials/creating-a-simple-3d-endless-runner-game-using-three-js--cms-29157?ec_unit=translation-info-language

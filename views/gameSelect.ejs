@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Joc web 3D</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Benvingut al joc <%= gamer %></h1>
+    <form action="/game", method="post">
+      <input type="hidden" name="name" value=<%= gamer %>>
+      <input type="radio" name="game" value="fàcil" checked> Fàcil<br>
+      <input type="radio" name="game" value="normal"> Normal<br>
+      <input type="radio" name="game" value="difícil"> Difícil<br>
+      <input type="submit" value="Juga">
+    </form>
+  </body>
+</html>
